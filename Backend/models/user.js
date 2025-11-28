@@ -7,18 +7,15 @@ const userSchema = new mongoose.Schema(
     phone: { type: String, required: true, match: /^[6-9]\d{9}$/ },
     role: { type: String, enum: ["user"], default: "user" },
     password: { type: String, required: true },
-
-    // ✅ free-text address (numbers, letters, symbols sab allowed)
-    address: { type: String, default: "" },
-
-    // ✅ gender + dob fields
-    gender: {
-      type: String,
-      enum: ["Male", "Female", "Other", "Prefer not to say"],
-      default: "Prefer not to say",
-    },
-    dob: { type: Date },
-
+    address: [
+      {
+        street: String,
+        city: String,
+        pincode: String,
+        tag: { type: String, enum: ["Home", "Work", "Other"], default: "Home" },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
     resetOTP: String,
     resetOTPExpires: Date,
   },
